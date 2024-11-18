@@ -26,6 +26,7 @@ int main(){
     // Getting Players
     cin>>input;
     players=input;
+    cout<<input;
     
     // Input Validator
     while (input > 0){
@@ -34,15 +35,17 @@ int main(){
         digits_entered+=1;
         
         if (individual > 1){
-            cout<<"Please only enter 1 or 0.";
-            exit(0);
-        }
-        
-        if (digits_entered==8){
-            cout<<"Please enter only 8 digits";
+            cout<<"Please only enter 1 or 0."<<endl;
+            cout<<"Or you acould have also inputted too many digits. Please input only 8.";
             exit(0);
         }
     }
+        if (digits_entered!=8){
+            cout<<"Please enter only 8 digits";
+            exit(0);
+        } 
+
+
     // Assigns Teams
     cout<<"Assigning teams"<<endl;
     sleep_for(seconds(1));

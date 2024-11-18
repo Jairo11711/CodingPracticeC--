@@ -49,11 +49,14 @@ int main()
     int clms;
     int rows;
 
-    const int  horizontal_spacing = 4;
-    const int vertical_spacing = 3;
+    int highest_value = *max_element(barChart_values.begin(), barChart_values.end());
+    const int  horizontal_spacing = 3; // 2 for right box side, 2 for the left box side
+    const int vertical_spacing = 4; //3+2 3 cuz 1 space for the bottom, 2 for the top
+                                    //and +2 cuz 2 rows lines was being eaten for printing
+    
 
-    rows = horizontal_spacing + bar_amount;
-    clms = vertical_spacing + *max_element(barChart_values.begin(), barChart_values.end()) - 1;
+    clms = horizontal_spacing + bar_amount;
+    rows = vertical_spacing + highest_value - 1;
 
     for (int i=0;i<rows;i++){
         for (int j=0;j<clms;j++){
@@ -74,13 +77,37 @@ int main()
             }
             
             //right of the box
+            // Also code for the barchart is here
             if (i!=0 && i!=rows-1){
-                if (j==clms-1){
+
+                if (i==1&&j!=clms-1){
+                    cout<<"  ";
+                }  
+
+                // Handles printing the bars
+                else if(j>0 && j<clms-2){
+                    int data = barChart_values[j-1];
+                    int top_spacing = *max_element(barChart_values.begin(), barChart_values.end()) - data;
+                    int translated_i = i-2;
+                    if(translated_i>top_spacing-1){
+                        cout<<" #"; 
+                    }
+                    else{
+                        cout<<"  ";
+                    }
+
+                }
+                else if (j==clms-1){
                     cout<<" 0";
                 }
+
                 else{
                     cout<<"  ";
                 }
+
+
+
+
             }
 
 
