@@ -4,9 +4,9 @@
 using namespace std;
 
 int main(){
-    string input = "iabbgcqaxyzopbqwpoaigxqaaohdasdfbibcadfgbpwaquglmnopw";
-    // cout<<"String to evaluate: ";
-    // cin>>input;
+    string input;
+    cout<<"String to evaluate: ";
+    cin>>input;
 
     string longest_string;
     string current_longest;
