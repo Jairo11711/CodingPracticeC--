@@ -7,10 +7,12 @@ class Student{
     static const int min_score = 0;
     int id;
     int classroom_id;
-    int final_score;
+    int final_score = 0;
 
-    void set_up(int id, int classroom_id, int final_score){
-
+    void set_up(int input_id, int input_classroom_id, int input_final_score){
+        id = id;
+        classroom_id = input_classroom_id;
+        final_score = input_final_score;
     }
 
     void assign_score(int score){
@@ -23,13 +25,13 @@ class Student{
 class Room{
     public:
     static const int max_students_size = 35;
-    std::vector<Student> student_amount;
+    std::vector<Student> student_batch;
     int id;
 
     int get_total_class_score(){
         int summation_of_scores;
-        for(int i = 0; i<student_amount.size();i++){
-            summation_of_scores += student_amount[i].final_score;
+        for(int i = 0; i<student_batch.size();i++){
+            summation_of_scores += student_batch[i].final_score;
         }
 
         return summation_of_scores;
@@ -43,13 +45,14 @@ std::vector<Room> create_classrooms(){
 
     for (int i = 0;i<max_rooms;i++){
         Room classroom;
+        classroom.id = i;
         classrooms.push_back(classroom);
     }
 
     return classrooms;
 }
 
-void get_student_data(){
+std::vector<Student> create_student_data(){
     std::vector<Student> student_body;
 
     std::cout<<"Enter student data"<<std::endl;
@@ -74,24 +77,54 @@ void get_student_data(){
             int answer;
             std::cout<<"You entered empty data."<<std::endl;
             std::cout<<"You wish to end inputting data here?"<<std::endl;
-            std::cout<<"Enter no to stop inputting student data/ any characters to continue."<<std::endl;
+            std::cout<<"Enter 0 to stop inputting student data or any characters to continue."<<std::endl;
             std::cin>>answer;
             if (answer == 0){
-                std::cout<<"Ending inputting of student data";
+                std::cout<<"Ending inputting of student data"<<std::endl;
                 break;
             }
             else{
-                std::cout<<"You have selected to continue inputting student data.";
+                std::cout<<"You have selected to continue inputting student data."<<std::endl;
             }
+        }
         Student new_student;
         new_student.set_up(student_id, class_id, score);
         student_body.push_back(new_student);
+        std::cout<<"Printing score of new student"<<student_body[i].final_score<<std::endl;
+        
+    }
+    return student_body;
+}
+
+void assign_rooms(std::vector<Student> &student_body, std::vector<Room> &classrooms){
+    for(int i = 0; i < student_body.size(); i++){
+        Student current_student = student_body[i];
+        for (int j = 0;j <classrooms.size(); j++){
+            Room current_room = classrooms[i];
+
+            if (current_room.student_batch.size() < Room::max_students_size){
+                current_room.student_batch.push_back(current_student);
+                std::cout<<"Room size"<<current_room.student_batch.size()<<std::endl;
+            }
         }
     }
 }
 
+void print_classroom_scores(std::vector<Room> &classrooms){
+    for(int i = 0; i<classrooms.size(); i++){
+        Room current_classroom = classrooms[i];
+        std::cout<<"Classroom "<< current_classroom.id+1<< " :" << current_classroom.get_total_class_score()<<std::endl;
+    }
+}
+
+std::vector<Room> computer_lab_rooms = create_classrooms();
+std::vector<Student> student_body = create_student_data();
+
+
 int main(){
-    std::vector<Room> computer_lab_rooms = create_classrooms();
-    get_student_data();
+    assign_rooms(student_body, computer_lab_rooms);
+    print_classroom_scores(computer_lab_rooms);
+
+
     return 0;
 }
