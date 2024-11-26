@@ -10,15 +10,9 @@ class Student{
     int final_score = 0;
 
     void set_up(int input_id, int input_classroom_id, int input_final_score){
-        id = id;
+        id = input_id;
         classroom_id = input_classroom_id;
         final_score = input_final_score;
-    }
-
-    void assign_score(int score){
-        if (score<0||score>100){
-            std::cout<<"Invalid Score. Please only enter values between 0 to 100.";
-        }
     }
 };
 
@@ -27,13 +21,14 @@ class Room{
     static const int max_students_size = 35;
     std::vector<Student> student_batch;
     int id;
+    
 
     int get_total_class_score(){
-        int summation_of_scores;
+        int summation_of_scores = 0;
         for(int i = 0; i<student_batch.size();i++){
-            summation_of_scores += student_batch[i].final_score;
+            summation_of_scores = summation_of_scores + student_batch[i].final_score;
+            std::cout<<summation_of_scores<<std::endl;
         }
-
         return summation_of_scores;
     }
 };
@@ -73,7 +68,7 @@ std::vector<Student> create_student_data(){
         std::cout<<"Final Score : ";
         std::cin>>score;
 
-        if (!score||!class_id||!student_id){
+        if (!class_id||!student_id){
             int answer;
             std::cout<<"You entered empty data."<<std::endl;
             std::cout<<"You wish to end inputting data here?"<<std::endl;
@@ -98,9 +93,9 @@ std::vector<Student> create_student_data(){
 
 void assign_rooms(std::vector<Student> &student_body, std::vector<Room> &classrooms){
     for(int i = 0; i <= student_body.size(); i++){
-        Student current_student = student_body[i];
+        Student& current_student = student_body[i];
         for (int j = 0;j <classrooms.size(); j++){
-            Room current_room = classrooms[i];
+            Room& current_room = classrooms[j];
 
             if (current_room.student_batch.size() < Room::max_students_size){
                 current_room.student_batch.push_back(current_student);
@@ -116,7 +111,7 @@ void assign_rooms(std::vector<Student> &student_body, std::vector<Room> &classro
 
 void print_classroom_scores(std::vector<Room> &classrooms){
     for(int i = 0; i<classrooms.size(); i++){
-        Room current_classroom = classrooms[i];
+        Room& current_classroom = classrooms[i];
         std::cout<<"Classroom "<< current_classroom.id+1<< " :" << current_classroom.get_total_class_score()<<std::endl;
     }
 }
