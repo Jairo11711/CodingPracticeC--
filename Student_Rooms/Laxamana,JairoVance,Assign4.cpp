@@ -27,7 +27,6 @@ class Room{
         int summation_of_scores = 0;
         for(int i = 0; i<student_batch.size();i++){
             summation_of_scores = summation_of_scores + student_batch[i].final_score;
-            std::cout<<summation_of_scores<<std::endl;
         }
         return summation_of_scores;
     }
@@ -97,12 +96,11 @@ void assign_rooms(std::vector<Student> &student_body, std::vector<Room> &classro
         for (int j = 0;j <classrooms.size(); j++){
             Room& current_room = classrooms[j];
 
-            if (current_room.student_batch.size() < Room::max_students_size){
+            if (current_room.id+1 == current_student.classroom_id){
                 current_room.student_batch.push_back(current_student);
                 break;
                 
             }
-            std::cout<<"Room size"<<current_room.student_batch.size()<<std::endl;
 
         }
     }
@@ -112,7 +110,7 @@ void assign_rooms(std::vector<Student> &student_body, std::vector<Room> &classro
 void print_classroom_scores(std::vector<Room> &classrooms){
     for(int i = 0; i<classrooms.size(); i++){
         Room& current_classroom = classrooms[i];
-        std::cout<<"Classroom "<< current_classroom.id+1<< " :" << current_classroom.get_total_class_score()<<std::endl;
+        std::cout<<"Computer Lab Room"<< current_classroom.id+1<< " : " << current_classroom.get_total_class_score()<<std::endl;
     }
 }
 
@@ -124,6 +122,9 @@ int main(){
     std::vector<Student> student_body = create_student_data();
     assign_rooms(student_body, computer_lab_rooms);
     print_classroom_scores(computer_lab_rooms);
+
+    int hey;
+    std::cin>>hey;
 
 
     return 0;
