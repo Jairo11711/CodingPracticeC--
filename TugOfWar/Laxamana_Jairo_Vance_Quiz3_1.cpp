@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <vector>
 
 using namespace std;
 using namespace std::this_thread;
@@ -11,8 +12,8 @@ int input;
 int players;
 int individual;
 
-int team1[4];
-int team2[4];
+vector<int> team1[4];
+vector<int> team2[4];
 int sum1;
 int sum2;
 
@@ -26,7 +27,6 @@ int main(){
     // Getting Players
     cin>>input;
     players=input;
-    cout<<input;
     
     // Input Validator
     while (input > 0){
@@ -36,12 +36,13 @@ int main(){
         
         if (individual > 1){
             cout<<"Please only enter 1 or 0."<<endl;
-            cout<<"Or you acould have also inputted too many digits. Please input only 8.";
+            cout<<"Or you acould have also inputted too many digits. Please reduce digits entered";
             exit(0);
         }
     }
-        if (digits_entered!=8){
-            cout<<"Please enter only 8 digits";
+
+        if (digits_entered%2 != 0){
+            cout<<"Please enter only even set of digits";
             exit(0);
         } 
 
@@ -50,17 +51,20 @@ int main(){
     cout<<"Assigning teams"<<endl;
     sleep_for(seconds(1));
     int i=0;
+
+    int middle_point = digits_entered/2;
+
     while (players > 0){
         individual = players %10;
         players = players / 10;
         
-        if (i<4){
-            team1[i] = individual;
+        if (i<middle_point){
+            team1.push_back(individual);
             cout<<team1[i]<<" Has joined team 1"<<endl;
             }
-        if(i>=4){
-            team2[i-4] = individual;
-            cout<<team2[i-4]<<" Has joined team 2"<<endl;
+        if(i>=middle_point){
+            team2.push_back(individual);
+            cout<<team2[i-middle_point]<<" Has joined team 2"<<endl;
             }
         i++;
         }
@@ -69,13 +73,9 @@ int main(){
     sleep_for(seconds(1));
 
     // Tug of war
-    for(i=0;i<4;i++){
+    for(i=0;i<;i++){
         sum1= sum1 + team1[i];
-        cout<<team1[i]<<" Added for team 1 "<<endl;
-        sleep_for(milliseconds(250));
         sum2 = sum2 + team2[i];
-        cout<<team2[i]<<" Added for team 2"<<endl;
-        sleep_for(milliseconds(250));
     }
     
     cout<<"The scores are in...."<<endl;

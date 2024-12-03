@@ -1,20 +1,22 @@
 #include <iostream>
+#include <string>
 
-class foo{
-    public:
 
-    int get_total_class_score(){
-        int test = 0;
-        for(int i = 0; i<10;i++){
-            test += 5;
-        }
-        std::cout<<test;
-        return test;
-        }
-};
+using namespace std; 
 
+string autoMorphic (int number)
+{
+  
+  string square = to_string(number*number);
+  string substring = to_string(number);
+  
+  if(square.find(substring) != string::npos){
+    return "Automorphic";
+  }
+  else{
+    return "Not!!";
+  }
+}
 int main(){
-    foo wow;
-    wow.get_total_class_score();
-    return 0;
+    cout<<autoMorphic(225);
 }
